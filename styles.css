@@ -1,49 +1,27 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
-    color: #333;
+  text-align: center;
 }
 
-.ronda {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #ddd;
-    border-radius: 5px;
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: green;
+  color: white;
+  border: none;
 }
 
-.partido {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: white;
-    border-radius: 5px;
+button[disabled] {
+  background-color: gray;
 }
 
-.equipo {
-    width: 100px;
-    text-align: center;
+#torneo div {
+  margin: 20px;
 }
 
-.ganador {
-    margin: 0 10px;
-}
-
-.finalizarPartido {
-    margin-left: 10px;
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.finalizarPartido:disabled {
-    background-color: grey;
-    cursor: default;
+select {
+  margin: 10px;
 }
