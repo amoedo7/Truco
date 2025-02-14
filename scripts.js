@@ -1,12 +1,32 @@
-function registrarResultado(partido, ganador) {
-    let lista = document.getElementById("ganadores");
-    let item = document.createElement("li");
-    item.textContent = ganador + " ha ganado el " + partido;
-    lista.appendChild(item);
+// Lista de los 20 equipos
+let equipos = [
+    "Equipo 1", "Equipo 2", "Equipo 3", "Equipo 4", "Equipo 5", 
+    "Equipo 6", "Equipo 7", "Equipo 8", "Equipo 9", "Equipo 10",
+    "Equipo 11", "Equipo 12", "Equipo 13", "Equipo 14", "Equipo 15", 
+    "Equipo 16", "Equipo 17", "Equipo 18", "Equipo 19", "Equipo 20"
+];
 
-    // Hacer que los botones de ese partido desaparezcan después de registrar el resultado
-    let matchDiv = document.getElementById(partido);
-    matchDiv.querySelectorAll("button").forEach(button => button.style.display = "none");
+// Función para generar el fixture
+function generarFixture() {
+    // Barajamos los equipos aleatoriamente
+    equipos = equipos.sort(() => Math.random() - 0.5);
 
-    // Si quieres actualizar la ronda o algo más aquí, también puedes hacerlo
+    // Crear la tabla HTML para mostrar el fixture
+    let fixtureHTML = '<table border="1"><thead><tr><th>Ronda</th><th>Partido</th></tr></thead><tbody>';
+
+    // Creamos los partidos
+    for (let i = 0; i < equipos.length / 2; i++) {
+        let ronda = Math.floor(i / 2) + 1;
+        fixtureHTML += `
+            <tr>
+                <td>Ronda ${ronda}</td>
+                <td>${equipos[i]} vs ${equipos[i + 1]}</td>
+            </tr>
+        `;
+    }
+
+    fixtureHTML += '</tbody></table>';
+
+    // Insertamos el fixture en el contenedor
+    document.getElementById('fixture-container').innerHTML = fixtureHTML;
 }
