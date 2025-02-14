@@ -44,3 +44,11 @@ button:disabled {
 input[type="checkbox"] {
     margin-left: 10px;
 }
+
+.eliminado {
+    background-color: #ccc;
+}
+
+.vida-perdida {
+    text-decoration: line-through;
+}

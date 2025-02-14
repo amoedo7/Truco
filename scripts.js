@@ -1,8 +1,20 @@
 const equipos = [
-    "Equipo 1", "Equipo 2", "Equipo 3", "Equipo 4",
-    "Equipo 5", "Equipo 6", "Equipo 7", "Equipo 8",
-    "Equipo 9", "Equipo 10", "Equipo 11", "Equipo 12",
-    "Equipo 13", "Equipo 14", "Equipo 15", "Equipo 16"
+    { nombre: "Equipo 1", vidas: 2, eliminado: false },
+    { nombre: "Equipo 2", vidas: 2, eliminado: false },
+    { nombre: "Equipo 3", vidas: 2, eliminado: false },
+    { nombre: "Equipo 4", vidas: 2, eliminado: false },
+    { nombre: "Equipo 5", vidas: 2, eliminado: false },
+    { nombre: "Equipo 6", vidas: 2, eliminado: false },
+    { nombre: "Equipo 7", vidas: 2, eliminado: false },
+    { nombre: "Equipo 8", vidas: 2, eliminado: false },
+    { nombre: "Equipo 9", vidas: 2, eliminado: false },
+    { nombre: "Equipo 10", vidas: 2, eliminado: false },
+    { nombre: "Equipo 11", vidas: 2, eliminado: false },
+    { nombre: "Equipo 12", vidas: 2, eliminado: false },
+    { nombre: "Equipo 13", vidas: 2, eliminado: false },
+    { nombre: "Equipo 14", vidas: 2, eliminado: false },
+    { nombre: "Equipo 15", vidas: 2, eliminado: false },
+    { nombre: "Equipo 16", vidas: 2, eliminado: false }
 ];
 
 let ronda = 1;
@@ -29,13 +41,17 @@ function crearRonda(partidos) {
         const partidoDiv = document.createElement("div");
         partidoDiv.classList.add("partido");
 
+        const equipo1 = partido.equipo1;
+        const equipo2 = partido.equipo2;
+
         partidoDiv.innerHTML = `
-            <span>${partido.equipo1} vs ${partido.equipo2}</span>
+            <span ${equipo1.eliminado ? "class='eliminado'" : ""}>${equipo1.nombre} ${equipo1.vidas > 0 ? "☑️" : "❎"}</span>
+            <span ${equipo2.eliminado ? "class='eliminado'" : ""}>${equipo2.nombre} ${equipo2.vidas > 0 ? "☑️" : "❎"}</span>
             <label>
-                <input type="checkbox" name="ganador-${ronda}-${index}" value="${partido.equipo1}" onclick="seleccionarGanador(event, '${ronda}-${index}')"> ${partido.equipo1}
+                <input type="checkbox" name="ganador-${ronda}-${index}" value="${equipo1.nombre}" onclick="seleccionarGanador(event, '${ronda}-${index}')"> ${equipo1.nombre}
             </label>
             <label>
-                <input type="checkbox" name="ganador-${ronda}-${index}" value="${partido.equipo2}" onclick="seleccionarGanador(event, '${ronda}-${index}')"> ${partido.equipo2}
+                <input type="checkbox" name="ganador-${ronda}-${index}" value="${equipo2.nombre}" onclick="seleccionarGanador(event, '${ronda}-${index}')"> ${equipo2.nombre}
             </label>
             <button id="boton-${ronda}-${index}" onclick="finalizarPartido('${ronda}-${index}')">Partido Finalizado</button>
         `;
@@ -64,12 +80,43 @@ function finalizarPartido(partidoId) {
     }
     
     const ganador = checkboxes[0].value;
+    const partido = document.getElementById(partidoId);
+    const equipo1 = partido.querySelectorAll("input[type='checkbox']")[0].value;
+    const equipo2 = partido.querySelectorAll("input[type='checkbox']")[1].value;
 
-    // Deshabilitar botón y checkboxes después de seleccionar ganador
+    // Buscar equipos
+    const equipoGanador = equipos.find(e => e.nombre === ganador);
+    const equipoPerdedor = equipos.find(e => e.nombre !== ganador && (e.nombre === equipo1 || e.nombre === equipo2));
+
+    // Actualizar vidas y eliminar si es necesario
+    if (equipoPerdedor.vidas > 1) {
+        equipoPerdedor.vidas -= 1;
+        equipoPerdedor.eliminado = false;
+    } else {
+        equipoPerdedor.eliminado = true;
+    }
+
+    // Deshabilitar botones y checkboxes
     document.getElementById(`boton-${partidoId}`).disabled = true;
     checkboxes.forEach(cb => cb.disabled = true);
 
+    // Actualizar interfaz
+    actualizarInterfaz();
+
+    // Avanzar al siguiente partido si hay equipos restantes
     avanzarGanador(ganador);
+}
+
+function actualizarInterfaz() {
+    const partidos = document.querySelectorAll(".partido");
+    partidos.forEach(partido => {
+        const equipo1 = partido.querySelectorAll("span")[0];
+        const equipo2 = partido.querySelectorAll("span")[1];
+
+        if (equipo1.innerText.includes("❎") || equipo2.innerText.includes("❎")) {
+            partido.classList.add("eliminado");
+        }
+    });
 }
 
 function avanzarGanador(ganador) {
