@@ -6,7 +6,6 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
 }
 
 #torneo {
@@ -41,16 +40,8 @@ button:disabled {
     cursor: not-allowed;
 }
 
-input[type="checkbox"] {
-    margin-left: 10px;
-}
-
 .eliminado {
     background-color: #ccc;
-}
-
-.vida-perdida {
-    text-decoration: line-through;
 }
 
 .comodin {
