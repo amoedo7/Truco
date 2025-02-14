@@ -1,61 +1,49 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f8f8;
 }
+
 h1 {
-  text-align: center;
-  color: #333;
+    color: #333;
 }
-#fixture {
-  max-width: 800px;
-  margin: 20px auto;
-}
+
 .ronda {
-  background: #fff;
-  margin: 20px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
 }
-.ronda h2 {
-  margin: 0 0 10px;
-  text-align: center;
-}
+
 .partido {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 8px 0;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
 }
-.partido.disabled {
-  background: #ddd;
-}
+
 .equipo {
-  flex: 1;
-  padding: 0 10px;
-  cursor: pointer;
+    width: 100px;
+    text-align: center;
 }
-.equipo.eliminado {
-  color: #888;
-  text-decoration: line-through;
+
+.ganador {
+    margin: 0 10px;
 }
-.vida {
-  margin-left: 5px;
+
+.finalizarPartido {
+    margin-left: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
 }
-button {
-  background: #4CAF50;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:disabled {
-  background: gray;
-  cursor: not-allowed;
+
+.finalizarPartido:disabled {
+    background-color: grey;
+    cursor: default;
 }
