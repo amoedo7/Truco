@@ -1,32 +1,58 @@
-// Lista de los 20 equipos
-let equipos = [
-    "Equipo 1", "Equipo 2", "Equipo 3", "Equipo 4", "Equipo 5", 
-    "Equipo 6", "Equipo 7", "Equipo 8", "Equipo 9", "Equipo 10",
-    "Equipo 11", "Equipo 12", "Equipo 13", "Equipo 14", "Equipo 15", 
-    "Equipo 16", "Equipo 17", "Equipo 18", "Equipo 19", "Equipo 20"
+// Array de equipos iniciales
+const equipos = [
+    { nombre: "Los mates", jugadores: ["Juan", "Pedro"] },
+    { nombre: "Los Tigres", jugadores: ["Maria", "Carlos"] },
+    { nombre: "Las Águilas", jugadores: ["José", "Luis"] },
+    { nombre: "Los Guerreros", jugadores: ["Raúl", "Pablo"] },
+    { nombre: "El Escuadrón", jugadores: ["Ana", "Luis"] },
+    { nombre: "Los Fantasmas", jugadores: ["David", "Marcos"] },
+    { nombre: "Los Halcones", jugadores: ["Laura", "Antonio"] },
+    { nombre: "Los Dragones", jugadores: ["Carlos", "Javier"] },
+    { nombre: "Los Leones", jugadores: ["Eduardo", "Fernando"] },
+    { nombre: "Los Lobos", jugadores: ["Ricardo", "José"] },
+    { nombre: "Los Fénix", jugadores: ["Sofia", "Diana"] },
+    { nombre: "Los Guerrilleros", jugadores: ["Marcelo", "Joaquín"] },
+    { nombre: "Las Panteras", jugadores: ["Lucía", "Marta"] },
+    { nombre: "Los Titanes", jugadores: ["Alfredo", "Gerardo"] },
+    { nombre: "Los Águilas", jugadores: ["Tomás", "Raúl"] },
+    { nombre: "Los Valkirias", jugadores: ["Mercedes", "Gabriel"] },
+    { nombre: "Los Exploradores", jugadores: ["Carlos", "Antonio"] },
+    { nombre: "Los Titanes", jugadores: ["Paula", "Laura"] },
+    { nombre: "Los Ninjas", jugadores: ["Marta", "Elena"] },
+    { nombre: "Los Guerreros", jugadores: ["Javier", "Miguel"] }
 ];
 
-// Función para generar el fixture
-function generarFixture() {
-    // Barajamos los equipos aleatoriamente
-    equipos = equipos.sort(() => Math.random() - 0.5);
+// Función para renderizar los equipos en el fixture
+function renderFixture() {
+    const fixtureDiv = document.getElementById('fixture');
+    fixtureDiv.innerHTML = '';  // Limpiar el fixture antes de renderizar
 
-    // Crear la tabla HTML para mostrar el fixture
-    let fixtureHTML = '<table border="1"><thead><tr><th>Ronda</th><th>Partido</th></tr></thead><tbody>';
+    equipos.forEach((equipo, index) => {
+        const roundDiv = document.createElement('div');
+        roundDiv.classList.add('round');
 
-    // Creamos los partidos
-    for (let i = 0; i < equipos.length / 2; i++) {
-        let ronda = Math.floor(i / 2) + 1;
-        fixtureHTML += `
-            <tr>
-                <td>Ronda ${ronda}</td>
-                <td>${equipos[i]} vs ${equipos[i + 1]}</td>
-            </tr>
-        `;
-    }
+        // Crear el div de cada partido
+        const matchDiv = document.createElement('div');
+        matchDiv.classList.add('match');
+        matchDiv.innerHTML = `${equipo.nombre} <br><span>${equipo.jugadores.join(" y ")}</span>`;
 
-    fixtureHTML += '</tbody></table>';
-
-    // Insertamos el fixture en el contenedor
-    document.getElementById('fixture-container').innerHTML = fixtureHTML;
+        roundDiv.appendChild(matchDiv);
+        fixtureDiv.appendChild(roundDiv);
+    });
 }
+
+// Función para reinscribir a un equipo
+function reinscribirEquipo() {
+    const teamName = document.getElementById('team-name').value;
+    if (teamName) {
+        // Añadir el equipo al fixture
+        equipos.push({ nombre: teamName, jugadores: ["Jugador 1", "Jugador 2"] });
+        renderFixture();
+        document.getElementById('team-name').value = '';  // Limpiar el campo
+    } else {
+        alert("Por favor, ingresa un nombre para el equipo.");
+    }
+}
+
+// Inicializar el torneo
+renderFixture();
