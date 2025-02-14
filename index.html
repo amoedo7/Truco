@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixture Torneo Truco</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Fixture del Torneo de Truco</h1>
+
+    <div id="ronda1">
+        <h2>Primera Ronda</h2>
+        <div class="match" id="match1">
+            <p><span id="team1">Equipo 1</span> vs <span id="team2">Equipo 2</span></p>
+            <button onclick="registrarResultado('match1', 'Equipo 1')">Gana Equipo 1</button>
+            <button onclick="registrarResultado('match1', 'Equipo 2')">Gana Equipo 2</button>
+        </div>
+        <!-- Agregar más partidos aquí -->
+    </div>
+
+    <h2>Clasificados</h2>
+    <ul id="ganadores"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>
