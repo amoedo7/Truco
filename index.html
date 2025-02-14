@@ -3,35 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torneo de Truco - Fixture</title>
+    <title>Torneo Truco</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <header>
-        <h1>Torneo de Truco - Fixture</h1>
-    </header>
-
-    <div class="content">
-
-        <div class="instructions">
-            <p>¡Bienvenidos al Torneo de Truco! A continuación verás el fixture actualizado, con espacios disponibles para los equipos que deseen reinscribirse.</p>
-        </div>
-
-        <div id="fixture" class="fixture">
-            <!-- Aquí se mostrarán las rondas de los equipos -->
-        </div>
-
-        <div id="reinscribirse" class="reinscripción">
-            <h2>Reinscribir equipo</h2>
-            <p>Selecciona un equipo vacío para reinscribirlo.</p>
-            <input type="text" id="team-name" placeholder="Nombre del equipo" />
-            <button onclick="reinscribirEquipo()">Reinscribir</button>
-        </div>
-
+    <h1>Torneo de Truco</h1>
+    <div id="torneo">
+        <div id="rondas"></div>
     </div>
-
     <script src="scripts.js"></script>
-
 </body>
 </html>
