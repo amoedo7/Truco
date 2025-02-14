@@ -44,7 +44,11 @@ button:disabled {
     background-color: #ccc;
 }
 
-.comodin {
-    background-color: #ffcc00;
-    font-weight: bold;
+.equipo {
+    cursor: pointer;
+}
+
+.equipo:hover {
+    text-decoration: underline;
+    color: blue;
 }

@@ -1,14 +1,14 @@
 let torneo = JSON.parse(localStorage.getItem("torneo")) || {
     ronda: 1,
     equipos: [
-        { nombre: "Equipo 1", vidas: 2, eliminado: false },
-        { nombre: "Equipo 2", vidas: 2, eliminado: false },
-        { nombre: "Equipo 3", vidas: 2, eliminado: false },
-        { nombre: "Equipo 4", vidas: 2, eliminado: false },
-        { nombre: "Equipo 5", vidas: 2, eliminado: false },
-        { nombre: "Equipo 6", vidas: 2, eliminado: false },
-        { nombre: "Equipo 7", vidas: 2, eliminado: false },
-        { nombre: "Equipo 8", vidas: 2, eliminado: false }
+        { nombre: "Equipo 1", jugadores: "Juan & Pedro", vidas: 2 },
+        { nombre: "Equipo 2", jugadores: "Carlos & Diego", vidas: 2 },
+        { nombre: "Equipo 3", jugadores: "Luis & Martín", vidas: 2 },
+        { nombre: "Equipo 4", jugadores: "Ana & Sofía", vidas: 2 },
+        { nombre: "Equipo 5", jugadores: "Roberto & Miguel", vidas: 2 },
+        { nombre: "Equipo 6", jugadores: "Laura & Verónica", vidas: 2 },
+        { nombre: "Equipo 7", jugadores: "Ricardo & Javier", vidas: 2 },
+        { nombre: "Equipo 8", jugadores: "Paula & Mariana", vidas: 2 }
     ],
     partidos: []
 };
@@ -18,9 +18,9 @@ function guardarEstado() {
 }
 
 function generarPartidos() {
-    let equiposDisponibles = torneo.equipos.filter(e => !e.eliminado);
+    let equiposDisponibles = torneo.equipos.filter(e => e.vidas > 0);
     if (equiposDisponibles.length % 2 !== 0) {
-        equiposDisponibles.push({ nombre: "Comodín", vidas: 2, eliminado: false });
+        equiposDisponibles.push({ nombre: "Comodín", jugadores: "Nadie & Nadie", vidas: 2 });
     }
     equiposDisponibles = equiposDisponibles.sort(() => Math.random() - 0.5);
     torneo.partidos = [];
@@ -48,8 +48,16 @@ function renderizarRonda() {
         partidoDiv.classList.add("partido");
         
         partidoDiv.innerHTML = `
-            <span ${partido.equipo1.eliminado ? "class='eliminado'" : ""}>${partido.equipo1.nombre} ${partido.equipo1.vidas > 0 ? "☑️" : "❎"}</span>
-            <span ${partido.equipo2.eliminado ? "class='eliminado'" : ""}>${partido.equipo2.nombre} ${partido.equipo2.vidas > 0 ? "☑️" : "❎"}</span>
+            <span class="equipo" onclick="marcarGanador(${index}, 1)">
+                ${partido.equipo1.nombre} (${partido.equipo1.jugadores}) ${partido.equipo1.vidas > 1 ? "❤️" : ""}
+            </span>
+            <input type="checkbox" id="checkbox${index}-1">
+            
+            <span class="equipo" onclick="marcarGanador(${index}, 2)">
+                ${partido.equipo2.nombre} (${partido.equipo2.jugadores}) ${partido.equipo2.vidas > 1 ? "❤️" : ""}
+            </span>
+            <input type="checkbox" id="checkbox${index}-2">
+            
             <button id="boton${index}" onclick="finalizarPartido(${index})" ${partido.finalizado ? "disabled" : ""}>Finalizar Partido</button>
         `;
         
@@ -60,25 +68,30 @@ function renderizarRonda() {
     verificarFinalizarRonda();
 }
 
+function marcarGanador(index, equipo) {
+    document.getElementById(`checkbox${index}-1`).checked = (equipo === 1);
+    document.getElementById(`checkbox${index}-2`).checked = (equipo === 2);
+}
+
 function finalizarPartido(index) {
     const partido = torneo.partidos[index];
     if (!partido) return;
-    
+
+    const equipo1Check = document.getElementById(`checkbox${index}-1`).checked;
+    const equipo2Check = document.getElementById(`checkbox${index}-2`).checked;
+
+    if (!equipo1Check && !equipo2Check) return;
+
     partido.finalizado = true;
-    
-    const ganador = Math.random() > 0.5 ? partido.equipo1 : partido.equipo2;
-    const perdedor = ganador === partido.equipo1 ? partido.equipo2 : partido.equipo1;
-    
+    partido.ganador = equipo1Check ? partido.equipo1 : partido.equipo2;
+    const perdedor = equipo1Check ? partido.equipo2 : partido.equipo1;
+
     if (perdedor.vidas > 1) {
         perdedor.vidas--;
     } else {
-        perdedor.eliminado = true;
+        perdedor.vidas = 0;
     }
-    
-    partido.ganador = ganador;
-    
-    document.getElementById("boton" + index).disabled = true;
-    
+
     guardarEstado();
     renderizarRonda();
 }
@@ -90,20 +103,12 @@ function verificarFinalizarRonda() {
 
 function finalizarRonda() {
     torneo.ronda++;
-    
     torneo.equipos = torneo.partidos
-        .filter(p => !p.ganador.eliminado)
+        .filter(p => p.ganador)
         .map(p => p.ganador);
-    
     torneo.partidos = [];
-    
-    if (torneo.equipos.length === 2) {
-        alert("¡Final del torneo! " + torneo.equipos[0].nombre + " vs " + torneo.equipos[1].nombre");
-    } else {
-        generarPartidos();
-        renderizarRonda();
-    }
-    
+    generarPartidos();
+    renderizarRonda();
     guardarEstado();
 }
 
