@@ -37,7 +37,7 @@ function crearRonda(partidos) {
             <label>
                 <input type="checkbox" name="ganador-${ronda}-${index}" value="${partido.equipo2}" onclick="seleccionarGanador(event, '${ronda}-${index}')"> ${partido.equipo2}
             </label>
-            <button onclick="finalizarPartido('${ronda}-${index}')">Partido Finalizado</button>
+            <button id="boton-${ronda}-${index}" onclick="finalizarPartido('${ronda}-${index}')">Partido Finalizado</button>
         `;
 
         listaPartidos.appendChild(partidoDiv);
@@ -64,11 +64,16 @@ function finalizarPartido(partidoId) {
     }
     
     const ganador = checkboxes[0].value;
+
+    // Deshabilitar botón y checkboxes después de seleccionar ganador
+    document.getElementById(`boton-${partidoId}`).disabled = true;
+    checkboxes.forEach(cb => cb.disabled = true);
+
     avanzarGanador(ganador);
 }
 
 function avanzarGanador(ganador) {
-    const equiposRestantes = JSON.parse(localStorage.getItem("equiposRestantes")) || equipos;
+    const equiposRestantes = JSON.parse(localStorage.getItem("equiposRestantes")) || [];
     equiposRestantes.push(ganador);
     localStorage.setItem("equiposRestantes", JSON.stringify(equiposRestantes));
 
@@ -84,7 +89,7 @@ function avanzarGanador(ganador) {
 
 function iniciarNuevaRonda() {
     ronda++;
-    const equiposRestantes = JSON.parse(localStorage.getItem("equiposRestantes")) || equipos;
+    const equiposRestantes = JSON.parse(localStorage.getItem("equiposRestantes")) || [];
     localStorage.setItem("equiposRestantes", JSON.stringify([]));
     
     const partidos = generarPartidos(equiposRestantes);
