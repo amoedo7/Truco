@@ -24,12 +24,8 @@ h1 {
     border: 1px solid #ddd;
     background-color: #fff;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-}
-
-.reinscrito {
-    color: red;
-    font-weight: bold;
 }
 
 button {
