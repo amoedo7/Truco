@@ -2,26 +2,18 @@ body {
   font-family: Arial, sans-serif;
 }
 
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ddd;
+}
+
 h1 {
   text-align: center;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: green;
-  color: white;
-  border: none;
-}
-
-button[disabled] {
-  background-color: gray;
-}
-
-#torneo div {
-  margin: 20px;
-}
-
-select {
-  margin: 10px;
 }
